@@ -5,3 +5,7 @@ story:
     cover: ""
     finished: false
 chapters: []
+settings:
+    templates:
+        index:
+        story:

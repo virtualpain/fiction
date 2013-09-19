@@ -26,7 +26,7 @@ class Fiction
 				File.open(File.join(target_dir,"config.yml"),"w") {|f| f.write(config.to_yaml)}
 				# create html dir
 				FileUtils.mkdir(File.join(target_dir,"html"))
-				File.open(File.join(target_dir,"summary"),"w"){|f| f.write("Your story summary goes here")} 
+				File.open(File.join(target_dir,"summary"),"w"){|f| f.write("#{title} summary, edit me in `summary` file")} 
 				# create draft dir
 				# FileUtils.mkdir(File.join(target_dir,"drafts"))
 				puts "New story \"#{title}\" created in #{dir_name}"
@@ -58,9 +58,8 @@ class Fiction
 		end
 	end
 
-	def self.serve
+	def self.serve(port=4000)
 		include WEBrick
-		port = 4000
 		puts "Running server at http://#{Socket.gethostname}:#{port}"
 		server = HTTPServer.new(:Port=>port,:DocumentRoot=>File.join(@wd,"html"))
 		trap("INT"){server.shutdown}

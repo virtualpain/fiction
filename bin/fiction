@@ -1,5 +1,8 @@
 #!/usr/bin/env ruby
 
+require "rubygems"
+require "bundle/setup"
+
 path = File.symlink?(__FILE__) ? File.readlink(__FILE__) : __FILE__
 require_relative File.expand_path("../../lib/fiction.rb",path)
 
@@ -17,7 +20,8 @@ when "generate"
 	Fiction.generate
 when "serve"
 	Fiction.generate
-	Fiction.serve
+	port = ARGV[1] if not ARGV[1].nil?
+	Fiction.serve(port)
 else
 	puts "Unknown command!"
 end
