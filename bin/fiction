@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+path = File.symlink?(__FILE__) ? File.readlink(__FILE__) : __FILE__
+require_relative File.expand_path("../../lib/fiction.rb",path)
+
+
+command = ARGV[0]
+WORKING_DIR = Dir.pwd
+TEMPLATE_DIR = File.expand_path("../../template",path)
+Fiction.new(WORKING_DIR,TEMPLATE_DIR)
+case command
+when "new"
+	Fiction.create(ARGV[1])
+when "chapter"
+	Fiction.chapter(ARGV[1])
+when "generate"
+	Fiction.generate
+when "serve"
+	Fiction.generate
+	Fiction.serve
+else
+	puts "Unknown command!"
+end

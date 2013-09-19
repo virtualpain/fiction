@@ -1,0 +1,61 @@
+body {
+	font-family:"Droid serif", serif;
+	font-size: 12pt;
+	color:#333;
+}
+.main {
+	width:800px;
+	margin:20px auto;
+	padding:20px;
+	border:1px solid #ddd;
+	min-height: 500px;
+}
+.text-center {
+	text-align: center;
+}
+.title,.subtitle,.author,h1,h2 {
+	color:#111;
+	margin-bottom: 20px;
+	text-align: center;
+}
+.title {
+	font-size: 24pt;
+	font-weight: bold;
+}
+.subtitle {
+	font-size: 18pt;
+}
+.content {
+	font-size: 14pt;
+}
+.title a, .title a:hover, .title a:visited, .title a:focus, .title a:active, 
+.subtitle a, .subtitle a:hover, .subtitle a:visited, .subtitle a:focus, .subtitle a:active
+{
+	color:#111;
+	text-decoration: none;
+}
+
+ul.nostyle {
+	padding:0;
+	margin:0;
+}
+ul.nostyle li {
+	list-style: none;
+}
+
+ul.nostyle li a, ul.nostyle li a:hover, ul.nostyle li a:visited, ul.nostyle li a:focus, ul.nostyle li a:active 
+{
+	color:blue;
+}
+
+.synopsis {
+	margin:auto;
+	width:450px;
+	color:darkgray;
+	font-style: italic;
+	text-align: center;
+}
+
+ul.toc {
+	text-align:center;
+}
