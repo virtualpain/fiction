@@ -2,6 +2,7 @@ require "fileutils"
 require "yaml"
 require "webrick"
 require_relative "fiction/generate"
+require_relative "fiction/generatedoc"
 class Fiction
 	def self.new(wd,tp)
 		@wd = wd
@@ -64,6 +65,29 @@ class Fiction
 		server = HTTPServer.new(:Port=>port,:DocumentRoot=>File.join(@wd,"html"))
 		trap("INT"){server.shutdown}
 		server.start
+	end
+
+	def self.doc
+		# check if there is config,
+		if File.exists?(File.join(@wd,"config.yml"))
+			# config = YAML.load_file(File.join(@wd,"config.yml"))
+			# check if there is no doc folder
+			if not File.exists?(File.join(@wd,"docs"))
+				# create doc folder
+				FileUtils.mkdir(File.join(@wd,"docs"))
+				# create folders: character, location, time, plots, etc
+				folders = %w{characters locations timeline plots}
+				folders.each do |folder|
+					puts "Creating #{folder}"
+					FileUtils.mkdir(File.join(@wd,"docs",folder))
+					FileUtils.touch(File.join(@wd,"docs",folder,"#{folder}.md"))
+				end
+			else
+				puts "There is already docs folder"
+			end
+		else
+			puts "No config file in here"
+		end
 	end
 
 	

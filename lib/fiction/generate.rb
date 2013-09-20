@@ -5,8 +5,6 @@ class Fiction
 		if File.exists? File.join(@wd,"config.yml")
 			# prepare the html dir
 			FileUtils.mkdir(File.join(@wd,"html")) unless File.exists? (File.join(@wd,"html"))
-			FileUtils.rm_rf(Dir.glob("*.html"))
-			FileUtils.rm_rf(Dir.glob("*.css"))
 			FileUtils.cp(File.join(@tp,"style.css"),File.join(@wd,"html"))
 
 			# load config file

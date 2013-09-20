@@ -29,7 +29,9 @@ body {
 	font-size: 14pt;
 }
 .title a, .title a:hover, .title a:visited, .title a:focus, .title a:active, 
-.subtitle a, .subtitle a:hover, .subtitle a:visited, .subtitle a:focus, .subtitle a:active
+.subtitle a, .subtitle a:hover, .subtitle a:visited, .subtitle a:focus, .subtitle a:active,
+h1 a, h1 a:hover, h1 a:visited, h1 a:focus, h1 a:active,
+h2 a, h2 a:hover, h2 a:visited, h2 a:focus, h2 a:active
 {
 	color:#111;
 	text-decoration: none;
@@ -43,7 +45,7 @@ ul.nostyle li {
 	list-style: none;
 }
 
-ul.nostyle li a, ul.nostyle li a:hover, ul.nostyle li a:visited, ul.nostyle li a:focus, ul.nostyle li a:active 
+a, a:hover, a:visited, a:focus, a:active 
 {
 	color:blue;
 }
@@ -58,4 +60,11 @@ ul.nostyle li a, ul.nostyle li a:hover, ul.nostyle li a:visited, ul.nostyle li a
 
 ul.toc {
 	text-align:center;
+}
+ul.toc li {
+	padding:8px 0;
+}
+
+p{
+	line-height: 1.8em;
 }

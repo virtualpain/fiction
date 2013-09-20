@@ -18,6 +18,10 @@ when "chapter"
 	Fiction.chapter(ARGV[1])
 when "generate"
 	Fiction.generate
+when "doc"
+	Fiction.doc
+when "generatedoc"
+	Fiction.generate_doc
 when "serve"
 	Fiction.generate
 	port = ARGV[1] ||= 4000
