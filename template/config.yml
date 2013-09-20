@@ -8,4 +8,5 @@ settings:
     templates:
         index:
         chapter:
+    format: markdown # prefered format for new chapter, no use for now
 chapters: []

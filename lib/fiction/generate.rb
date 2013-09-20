@@ -16,7 +16,7 @@ class Fiction
 			chapter_list = ""
 			if config["chapters"].size > 0
 				config["chapters"].each do |chapter|
-					chapter_list = chapter_list + "<li><a href=\"#{chapter["file"]}.html\">#{chapter["title"]}</a></li>\n"
+					chapter_list = chapter_list + "<li><a href=\"#{File.basename(chapter['file'],".md")}.html\">#{chapter["title"]}</a></li>\n"
 				end
 			else
 				chapter_list = "<p>There is no chapter on this story yet</p>"
@@ -47,7 +47,7 @@ class Fiction
 			if config["chapters"].size > 0
 				config["chapters"].each do |chapter|
 					print "Generating \"#{chapter['title']}\"..."
-					md_file = chapter["file"] + ".md"
+					md_file = chapter["file"]
 					md_content = File.open(File.join(@wd,md_file),"r").read
 					html_content = markdown.render(md_content)
 					template_html = File.open(File.join(@tp,"template_story_viewer.html"),"r").read
@@ -57,7 +57,7 @@ class Fiction
 						author_name: config["story"]["author"],
 						:content => html_content
 					}
-					File.open(File.join(@wd,"html","#{chapter['file']}.html"),"w"){|f| f.write(template_html_content)}
+					File.open(File.join(@wd,"html","#{File.basename(chapter['file'],".md")}.html"),"w"){|f| f.write(template_html_content)}
 					puts "done"
 					chapter_number += 1
 				end

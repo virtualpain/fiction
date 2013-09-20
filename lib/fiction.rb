@@ -45,12 +45,14 @@ class Fiction
 				new_chapter_number = config["chapters"].size + 1
 
 				# add new content file
-				FileUtils.cp(File.join(@tp,"empty.md"),File.join(@wd,"chapter_#{new_chapter_number}.md"))
+				filename = title.downcase.strip.gsub(/[^a-z1-9]/,"_").gsub(/\_{2,}/,"")
+				filename = "#{new_chapter_number}.#{filename}"
+				FileUtils.cp(File.join(@tp,"empty.md"),File.join(@wd,"#{filename}.md"))
 
 				# modify config
-				config["chapters"] = config["chapters"] + [{"title"=>title,"file"=>"chapter_#{new_chapter_number}"}]
+				config["chapters"] = config["chapters"] + [{"title"=>title,"file"=>"#{filename}.md"}]
 				File.open(File.join(@wd,"config.yml"),"w") {|f| f.write(config.to_yaml)}
-				puts "Created new chapter \"#{title}\" in chapter_#{new_chapter_number}.md"
+				puts "Created new chapter \"#{title}\" in #{filename}.md"
 			else
 				puts "No config file found"
 			end
