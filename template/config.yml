@@ -1,3 +1,4 @@
+version: 1
 story:
     title: ""
     author: Your Name Here
@@ -5,8 +6,10 @@ story:
     cover: ""
     finished: false
 settings:
-    templates:
+    using_template: false
+    templates: # custom template, should be in template/
         index:
         chapter:
+        style:
     format: markdown # prefered format for new chapter, no use for now
 chapters: []

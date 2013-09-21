@@ -26,6 +26,8 @@ when "serve"
 	Fiction.generate
 	port = ARGV[1] ||= 4000
 	Fiction.serve(port)
+when "backup"
+	Fiction.backup
 else
 	puts "Unknown command!"
 end

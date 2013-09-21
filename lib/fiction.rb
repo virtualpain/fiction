@@ -3,6 +3,7 @@ require "yaml"
 require "webrick"
 require_relative "fiction/generate"
 require_relative "fiction/generatedoc"
+require_relative "fiction/backup"
 class Fiction
 	def self.new(wd,tp)
 		@wd = wd
