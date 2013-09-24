@@ -1,5 +1,6 @@
 require "yaml"
 require "redcarpet"
+require "sass"
 class Fiction
 	def self.generate
 		if File.exists? File.join(@wd,"config.yml")
@@ -28,12 +29,17 @@ class Fiction
 				summary = File.open("summary","r").read
 			end
 
+			# render stylesheet (.css or .scss)
+			template_style = File.open(File.join(@tp,"style.css"),"r").read
+			template_style = Sass::Engine.new(template_style,syntax: :scss, :style=> :compressed).render
+
 			# assign variables
 			template_index = template_index % {
 				story_title: config["story"]["title"],
 				author_name: config["story"]["author"],
 				story_summary: summary,
-				chapters: chapter_list
+				chapters: chapter_list,
+				style: template_style
 			}
 			File.open(File.join(@wd,"html","index.html"),"w") {|f| f.write template_index}
 			puts "done"
@@ -45,16 +51,19 @@ class Fiction
 			
 			# generate chapters
 			if config["chapters"].size > 0
+				template_html = File.open(File.join(@tp,"template_story_viewer.html"),"r").read
+				
+				
 				config["chapters"].each do |chapter|
 					print "Generating \"#{chapter['title']}\"..."
 					md_file = chapter["file"]
 					md_content = File.open(File.join(@wd,md_file),"r").read
 					html_content = markdown.render(md_content)
-					template_html = File.open(File.join(@tp,"template_story_viewer.html"),"r").read
 					template_html_content = template_html % {
 						:story_title => config["story"]["title"],
 						:story_subtitle => chapter["title"],
 						author_name: config["story"]["author"],
+						style: template_style,
 						:content => html_content
 					}
 					File.open(File.join(@wd,"html","#{File.basename(chapter['file'],".md")}.html"),"w"){|f| f.write(template_html_content)}
