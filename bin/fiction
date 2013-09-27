@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 require "rubygems"
-require "bundler/setup"
 
 path = File.symlink?(__FILE__) ? File.readlink(__FILE__) : __FILE__
 require_relative File.expand_path("../../lib/fiction.rb",path)
@@ -28,6 +27,8 @@ when "serve"
 	Fiction.serve(port)
 when "backup"
 	Fiction.backup
+when "help"
+	Fiction.help
 else
-	puts "Unknown command!"
+	Fiction.help
 end
