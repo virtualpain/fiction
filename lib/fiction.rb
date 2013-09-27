@@ -5,6 +5,7 @@ require_relative "fiction/generate"
 require_relative "fiction/generatedoc"
 require_relative "fiction/backup"
 require_relative "fiction/help"
+require_relative "fiction/version"
 class Fiction
 	def self.new(wd,tp)
 		@wd = wd
@@ -23,6 +24,7 @@ class Fiction
 				Dir.mkdir(target_dir)
 				# copy config file
 				FileUtils.cp(File.join(@tp,"config.yml"),target_dir)
+				FileUtils.cp(File.join(@tp,"license"),target_dir)
 				# change config file
 				config = YAML.load_file(File.join(target_dir,"config.yml"))
 				config["story"]["title"] = title
