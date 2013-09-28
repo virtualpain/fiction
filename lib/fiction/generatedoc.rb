@@ -11,19 +11,23 @@ class Fiction
 			if File.exists?(File.join(@wd,"docs"))
 				docs_dir = File.join(@wd,"docs")
 				# clean html/docs/
-				FileUtils.mkdir(File.join(@wd,"html","docs")) unless File.exists?(File.join(@wd,"html","docs"))
+				FileUtils.mkdir(File.join(@wd,"html_docs")) unless File.exists?(File.join(@wd,"html_docs"))
 				# initialize index file content
 				index_file = "<h1><a href='../index.html'>#{config["story"]["title"]}</a></h1>"
-				template_file = File.open(File.join(@tp,"empty.html"),"r").read
-				template_style = File.open(File.join(@tp,"style.css"),"r").read
-				# loop through folder
+				template_file = File.open(@config['default_template_empty'],"r").read
+				template_style = File.open(@config['default_template_style'],"r").read
+				
+				# getting folders
 				doc_folders = Dir.entries(File.join(@wd,"docs")).select {|d| File.directory?(File.join(@wd,"docs")) and !(d == "." or d == "..")}
+				
 				index_file = index_file + "<ul>"
+				
+				# loop through folder
 				doc_folders.each do |folder|
 					# puts folder + "/"
 					# generate folder with same name in html/docs/
 					puts "Created #{folder}"
-					FileUtils.mkdir(File.join(@wd,"html","docs",folder)) unless File.exists?(File.join(@wd,"html","docs",folder))
+					FileUtils.mkdir(File.join(@wd,"html_docs",folder)) unless File.exists?(File.join(@wd,"html_docs",folder))
 					# loop the files inside /docs/x/
 					doc_files = Dir[File.join(@wd,"docs",folder,"*.md")]
 					index_file += "\n\t<li><strong>#{folder.capitalize}</strong>:\n\t\t<ul>"
@@ -35,7 +39,7 @@ class Fiction
 							:title => folder,
 							:content => "<p><a href='../index.html'>Back to documentation</a></p>" + markdown.render(raw_doc_content),
 							:style=>template_style}
-						File.open(File.join(@wd,"html","docs",folder,File.basename(file,"md")+"html"),"w"){|f| f.write content}
+						File.open(File.join(@wd,"html_docs",folder,File.basename(file,"md")+"html"),"w"){|f| f.write content}
 						puts "Generated #{File.basename(file,".md")}.html"
 						filename = File.basename(file,".md")
 						index_file += "\n\t\t\t<li><a href='#{folder}/#{filename+".html"}'>#{filename.capitalize}</a></li>"
@@ -49,7 +53,7 @@ class Fiction
 					:style => template_style,
 					:content => index_file
 				}
-				File.open(File.join(@wd,"html","docs","index.html"),"w"){|f| f.write index_content}
+				File.open(File.join(@wd,"html_docs","index.html"),"w"){|f| f.write index_content}
 				puts "Index file created"
 			end
 		end

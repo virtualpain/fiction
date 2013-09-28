@@ -8,10 +8,10 @@ class Fiction
 			FileUtils.mkdir(File.join(@wd,"html")) unless File.exists? (File.join(@wd,"html"))
 
 			# no longer used since CSS now injected in every page
-			# FileUtils.cp(File.join(@tp,Fiction::Config['settings']['template']['default_template_style']),File.join(@wd,"html"))
+			# FileUtils.cp(@config['default_template_style'],File.join(@wd,"html"))
 
 			# render stylesheet (.css or .scss)
-			template_style = File.open(File.join(@tp,Fiction::Config['settings']['template']['default_template_style']),"r").read
+			template_style = File.open(@config['default_template_style'],"r").read
 			template_style = Sass::Engine.new(template_style,syntax: :scss, :style=> :compressed).render
 
 			# load config file
@@ -20,7 +20,7 @@ class Fiction
 			# create index file
 			print "Creating index file..." unless quiet
 
-			template_index = File.open(File.join(@tp,Fiction::Config['settings']['template']['default_template_index']),"r").read
+			template_index = File.open(@config['default_template_index'],"r").read
 			chapter_list = ""
 			if config["chapters"].size > 0
 				config["chapters"].each do |chapter|
@@ -56,7 +56,7 @@ class Fiction
 			
 			# generate chapters
 			if config["chapters"].size > 0
-				template_html = File.open(File.join(@tp,Fiction::Config['settings']['template']['default_template_chapter']),"r").read
+				template_html = File.open(@config['default_template_chapter'],"r").read
 				
 				
 				config["chapters"].each do |chapter|
