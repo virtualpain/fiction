@@ -13,6 +13,29 @@ class Fiction
 		# puts "@wd = #{@wd}"
 		# puts "@tp = #{@tp}"
 	end
+
+	# Hardcoded configs
+	Config = {
+		"version" => 1,
+		"story" => {
+			"title" => "",
+			"author" => "Your Name Here",
+			"cover" => nil,
+			"finished" => false
+		},
+		"settings" => {
+			"template" => {
+				"default_template_license" => File.join(@tp,"template_license"),
+				"default_template_empty" => File.join(@tp,"template_empty.html"),
+				"default_template_empty_chapter" => File.join(@tp,"template_empty.md"),
+				"default_template_index" => File.join(@tp,"template_index.html"),
+				"default_template_chapter" => File.join(@tp,"template_chapter.html"),
+				"default_template_style" => File.join(@tp,"template_style.scss")
+			},
+			"format" => "markdown"
+		}
+	}
+
 	def self.create(title)
 		if title.empty?
 			puts "Title cannot be empty"
@@ -24,7 +47,7 @@ class Fiction
 				Dir.mkdir(target_dir)
 				# copy config file
 				FileUtils.cp(File.join(@tp,"config.yml"),target_dir)
-				FileUtils.cp(File.join(@tp,"license"),target_dir)
+				FileUtils.cp(File.join(@tp,Fiction::Config['settings']['template']['default_template_license']),target_dir)
 				# change config file
 				config = YAML.load_file(File.join(target_dir,"config.yml"))
 				config["story"]["title"] = title
@@ -51,7 +74,7 @@ class Fiction
 				# add new content file
 				filename = title.downcase.strip.gsub(/[^a-z1-9]/,"_").gsub(/\_{2,}/,"")
 				filename = "#{new_chapter_number}.#{filename}"
-				FileUtils.cp(File.join(@tp,"empty.md"),File.join(@wd,"#{filename}.md"))
+				FileUtils.cp(File.join(@tp,Fiction::Config['settings']['template']['default_template_empty_chapter']),File.join(@wd,"#{filename}.md"))
 
 				# modify config
 				config["chapters"] = config["chapters"] + [{"title"=>title,"file"=>"#{filename}.md"}]
