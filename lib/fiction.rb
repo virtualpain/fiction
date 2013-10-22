@@ -48,7 +48,7 @@ class Fiction
 				Dir.mkdir(target_dir)
 				# copy config file
 				FileUtils.cp(File.join(@tp,"config.yml"),target_dir)
-				FileUtils.cp(@config['settings']['template']['default_template_license'],target_dir)
+				FileUtils.cp(@config['default_template_license'],File.join(target_dir,"license"))
 				# change config file
 				config = YAML.load_file(File.join(target_dir,"config.yml"))
 				config["story"]["title"] = title
@@ -75,7 +75,7 @@ class Fiction
 				# add new content file
 				filename = title.downcase.strip.gsub(/[^a-z0-9]/,"_").gsub(/\_{2,}/,"")
 				filename = "#{new_chapter_number}.#{filename}"
-				FileUtils.cp(@config['settings']['template']['default_template_empty_chapter'],File.join(@wd,"#{filename}.md"))
+				FileUtils.cp(@config['default_template_empty_chapter'],File.join(@wd,"#{filename}.md"))
 
 				# modify config
 				config["chapters"] = config["chapters"] + [{"title"=>title,"file"=>"#{filename}.md"}]
