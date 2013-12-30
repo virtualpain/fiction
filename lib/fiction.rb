@@ -6,6 +6,7 @@ require_relative "fiction/generatedoc"
 require_relative "fiction/backup"
 require_relative "fiction/help"
 require_relative "fiction/version"
+require_relative "fiction/render"
 class Fiction
 	def self.new(wd,tp)
 		@wd = wd
@@ -26,7 +27,7 @@ class Fiction
 			"default_template_empty" => File.join(@tp,"template_empty.html"),
 			"default_template_empty_chapter" => File.join(@tp,"template_chapter.md"),
 			"default_template_index" => File.join(@tp,"index.html"),
-			"default_template_chapter" => File.join(@tp,"template_chapter.html"),
+			"default_template_chapter" => File.join(@tp,"chapter.html"),
 			"default_template_style" => File.join(@tp,"template_style.scss"),
 			"default_format" => "markdown"
 		}

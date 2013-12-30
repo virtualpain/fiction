@@ -11,7 +11,7 @@ class Fiction
 		elsif format == "textile"
 			compiled_content = RedCloth.new(content).to_html
 		elsif format == "sass"
-			compiled_content = Sass::Engine.new(template_style,syntax: :scss, :style=> :compressed).render
+			compiled_content = Sass::Engine.new(content,syntax: :scss, :style=> :compressed).render
 		else
 			puts "Fiction.render : Unknown format, returning raw content"
 			compiled_content = content

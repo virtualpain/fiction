@@ -22,6 +22,7 @@ class Fiction
 			print "Creating index file..." unless quiet
 
 			template_index = File.open(@config['default_template_index'],"r").read
+			
 			# chapter_list = ""
 			# if config["chapters"].size > 0
 			# 	config["chapters"].each do |chapter|
@@ -47,10 +48,10 @@ class Fiction
 			# 	version: Fiction::Version
 			# }
 
-			# render
+			# render liquid template
 			template = Liquid::Template.parse(template_index)
 			compiled_template = template.render(
-				'title'=>config["story"]["title"],
+				'title' => config["story"]["title"],
 				'author' => config["story"]["author"],
 				'summary' => summary,
 				'chapters' => config["chapters"],
@@ -76,18 +77,21 @@ class Fiction
 					raw_content = File.open(File.join(@wd,raw_file),"r").read
 
 					# rendering content
+					if config["settings"]["format"].nil?
+						config["settings"]["format"] = 'md'
+					end
 					compiled_content = Fiction.render(raw_content,config["settings"]["format"])
 
 					# rendering liquid template
 					template_html_content = Liquid::Template.parse(template_html)
-					template_html_content.render (
+					compiled_chapter_template = template_html_content.render(
 						'title' => config["story"]["title"],
 						'chapter' => chapter["title"],
 						'author' => config["story"]["author"],
 						'style' => template_style,
 						'content' => compiled_content
 					)
-					File.open(File.join(@wd,"html","#{chapter['file']}.html"),"w"){|f| f.write(template_html_content)}
+					File.open(File.join(@wd,"html","#{chapter['file']}.html"),"w"){|f| f.write(compiled_chapter_template)}
 					puts "done" unless quiet
 					chapter_number += 1
 				end
