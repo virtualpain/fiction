@@ -35,11 +35,9 @@ That will create new story with `Your Story Title`, then enter the fic directory
 
 This few things I considered missing before version 1:
 
-* html generator using nokogiri instead using template (hardcoded)
+* using liquid to render template, current html generation are hardcoded
 * custom template (must be .html) and style (css, less, sass, scss) if defined in the config. Template will be located in storyname/template
-* license text (defined in config)
+* license texts (defined in config)
 * pagination through chapters
 * compact chapter list in index page
-* set default configs so config.yml content can be minified.
 * `fix` command to generate missing files (config file,license file, docs dir, or html dir)
-* showing help text if command is unknown (done)

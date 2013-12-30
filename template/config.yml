@@ -3,6 +3,8 @@ story:
     title: ""
     author: Your Name Here
     finished: false
+    adult: false
+    language: en_US
 settings:
     using_template: false
 chapters: []

@@ -29,6 +29,8 @@ when "backup"
 	Fiction.backup
 when "help"
 	Fiction.help
+when "version"
+	puts "Fiction v"+Fiction::Version
 else
 	Fiction.help
 end

@@ -10,6 +10,7 @@ class Fiction
 			:serve => "Generate chapters and create local server (default port 4000)",
 			:backup => "Generate backup of the story"
 		}
+		puts "Fiction v"+Fiction::Version
 		puts "Available commands:"
 		commands.each do |key,command|
 			puts "#{key} : #{command}"
