@@ -6,5 +6,6 @@ story:
     adult: false
     language: en_US
 settings:
+	format: md
     using_template: false
 chapters: []

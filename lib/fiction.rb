@@ -25,7 +25,7 @@ class Fiction
 			"default_template_license" => File.join(@tp,"template_license"),
 			"default_template_empty" => File.join(@tp,"template_empty.html"),
 			"default_template_empty_chapter" => File.join(@tp,"template_chapter.md"),
-			"default_template_index" => File.join(@tp,"template_index.html"),
+			"default_template_index" => File.join(@tp,"index.html"),
 			"default_template_chapter" => File.join(@tp,"template_chapter.html"),
 			"default_template_style" => File.join(@tp,"template_style.scss"),
 			"default_format" => "markdown"

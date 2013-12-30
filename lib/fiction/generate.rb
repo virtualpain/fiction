@@ -1,6 +1,7 @@
 require "yaml"
 require "redcarpet"
 require "sass"
+require "liquid"
 class Fiction
 	def self.generate(quiet=false)
 		if File.exists? File.join(@wd,"config.yml")
@@ -37,16 +38,27 @@ class Fiction
 			end
 
 			# assign variables
-			template_index = template_index % {
-				story_title: config["story"]["title"],
-				author_name: config["story"]["author"],
-				story_summary: summary,
-				chapters: chapter_list,
-				style: template_style,
-				version: Fiction::Version
-			}
+			# template_index = template_index % {
+			# 	story_title: config["story"]["title"],
+			# 	author_name: config["story"]["author"],
+			# 	story_summary: summary,
+			# 	chapters: chapter_list,
+			# 	style: template_style,
+			# 	version: Fiction::Version
+			# }
 
-			File.open(File.join(@wd,"html","index.html"),"w") {|f| f.write template_index}
+			# render
+			template = Liquid::Template.parse(template_index)
+			compiled_template = template.render(
+				'title'=>config["story"]["title"],
+				'author' => config["story"]["author"],
+				'summary' => summary,
+				'chapters' => config["chapters"],
+				'style' => template_style,
+				'version' => Fiction::Version
+			)
+
+			File.open(File.join(@wd,"html","index.html"),"w") {|f| f.write compiled_template}
 			puts "done"
 
 			# prepare the markdown parser
