@@ -1,7 +1,6 @@
 # Fiction
 
-A ruby program to manage my fiction writings. All writings are
-written in markdown. Textile supports soon.
+A ruby program to manage my fiction writings.
 
 ## Install
 
@@ -35,7 +34,6 @@ That will create new story with `Your Story Title`, then enter the fic directory
 
 This few things I considered missing before version 1:
 
-* using liquid to render template, current html generation are hardcoded
 * custom template (must be .html) and style (css, less, sass, scss) if defined in the config. Template will be located in storyname/template
 * license texts (defined in config)
 * pagination through chapters

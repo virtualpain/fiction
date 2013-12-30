@@ -22,15 +22,6 @@ class Fiction
 			print "Creating index file..." unless quiet
 
 			template_index = File.open(@config['default_template_index'],"r").read
-			
-			# chapter_list = ""
-			# if config["chapters"].size > 0
-			# 	config["chapters"].each do |chapter|
-			# 		chapter_list = chapter_list + "<li><a href=\"#{File.basename(chapter['file'],".md")}.html\">#{chapter["title"]}</a></li>\n"
-			# 	end
-			# else
-			# 	chapter_list = "<p>There is no chapter on this story yet</p>"
-			# end
 
 			# put summary to empty if there is no 'summary' file
 			summary = ""
