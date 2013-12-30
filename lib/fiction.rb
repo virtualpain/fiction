@@ -71,16 +71,17 @@ class Fiction
 				# get new chapter number
 				config = YAML.load_file(File.join(@wd,"config.yml"))
 				new_chapter_number = config["chapters"].size + 1
+				format = config["settings"]["format"]
 
 				# add new content file
 				filename = title.downcase.strip.gsub(/[^a-z0-9]/,"_").gsub(/\_{2,}/,"")
 				filename = "#{new_chapter_number}.#{filename}"
-				FileUtils.cp(@config['default_template_empty_chapter'],File.join(@wd,"#{filename}.md"))
+				FileUtils.cp(@config['default_template_empty_chapter'],File.join(@wd,"#{filename}.#{format}"))
 
 				# modify config
-				config["chapters"] = config["chapters"] + [{"title"=>title,"file"=>"#{filename}.md"}]
+				config["chapters"] = config["chapters"] + [{"title"=>title,"file"=>"#{filename}"}]
 				File.open(File.join(@wd,"config.yml"),"w") {|f| f.write(config.to_yaml)}
-				puts "Created new chapter \"#{title}\" in #{filename}.md"
+				puts "Created new chapter \"#{title}\" in #{filename}.#{format}"
 			else
 				puts "No config file found"
 			end

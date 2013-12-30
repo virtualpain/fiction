@@ -13,7 +13,7 @@ class Fiction
 
 			# render stylesheet (.css or .scss)
 			template_style = File.open(@config['default_template_style'],"r").read
-			template_style = Sass::Engine.new(template_style,syntax: :scss, :style=> :compressed).render
+			template_style = Fiction.render(template_style,'sass')
 
 			# load config file
 			config = YAML.load_file(File.join(@wd,"config.yml"))
@@ -22,14 +22,14 @@ class Fiction
 			print "Creating index file..." unless quiet
 
 			template_index = File.open(@config['default_template_index'],"r").read
-			chapter_list = ""
-			if config["chapters"].size > 0
-				config["chapters"].each do |chapter|
-					chapter_list = chapter_list + "<li><a href=\"#{File.basename(chapter['file'],".md")}.html\">#{chapter["title"]}</a></li>\n"
-				end
-			else
-				chapter_list = "<p>There is no chapter on this story yet</p>"
-			end
+			# chapter_list = ""
+			# if config["chapters"].size > 0
+			# 	config["chapters"].each do |chapter|
+			# 		chapter_list = chapter_list + "<li><a href=\"#{File.basename(chapter['file'],".md")}.html\">#{chapter["title"]}</a></li>\n"
+			# 	end
+			# else
+			# 	chapter_list = "<p>There is no chapter on this story yet</p>"
+			# end
 
 			# put summary to empty if there is no 'summary' file
 			summary = ""
@@ -61,8 +61,7 @@ class Fiction
 			File.open(File.join(@wd,"html","index.html"),"w") {|f| f.write compiled_template}
 			puts "done"
 
-			# prepare the markdown parser
-			markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(:no_links => true,:filter_html => true),:autolink => false)
+			
 
 			chapter_number = 1
 			
@@ -73,17 +72,22 @@ class Fiction
 				
 				config["chapters"].each do |chapter|
 					print "Generating \"#{chapter['title']}\"..." unless quiet
-					md_file = chapter["file"]
-					md_content = File.open(File.join(@wd,md_file),"r").read
-					html_content = markdown.render(md_content)
-					template_html_content = template_html % {
-						:story_title => config["story"]["title"],
-						:story_subtitle => chapter["title"],
-						author_name: config["story"]["author"],
-						style: template_style,
-						:content => html_content
-					}
-					File.open(File.join(@wd,"html","#{File.basename(chapter['file'],".md")}.html"),"w"){|f| f.write(template_html_content)}
+					raw_file = chapter["file"]
+					raw_content = File.open(File.join(@wd,raw_file),"r").read
+
+					# rendering content
+					compiled_content = Fiction.render(raw_content,config["settings"]["format"])
+
+					# rendering liquid template
+					template_html_content = Liquid::Template.parse(template_html)
+					template_html_content.render (
+						'title' => config["story"]["title"],
+						'chapter' => chapter["title"],
+						'author' => config["story"]["author"],
+						'style' => template_style,
+						'content' => compiled_content
+					)
+					File.open(File.join(@wd,"html","#{chapter['file']}.html"),"w"){|f| f.write(template_html_content)}
 					puts "done" unless quiet
 					chapter_number += 1
 				end
