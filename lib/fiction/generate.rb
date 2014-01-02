@@ -43,15 +43,10 @@ class Fiction
 			File.open(File.join(@wd,"html","index.html"),"w") {|f| f.write compiled_template}
 			puts "done"
 
-			
-
 			chapter_number = 1
 			
 			# generate chapters
 			if config["chapters"].size > 0
-				template_html = File.open(@config['default_template_chapter'],"r").read
-				
-				
 				config["chapters"].each do |chapter|
 					print "Generating \"#{chapter['title']}\"..." unless quiet
 					raw_file = chapter["file"]
@@ -64,6 +59,7 @@ class Fiction
 					compiled_content = Fiction.render(raw_content,config["settings"]["format"])
 
 					# rendering liquid template
+					template_html = File.open(@config['default_template_chapter'],"r").read
 					template_html_content = Liquid::Template.parse(template_html)
 					compiled_chapter_template = template_html_content.render(
 						'title' => config["story"]["title"],
