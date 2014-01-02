@@ -20,10 +20,11 @@ class Fiction
 			# render stylesheet (.css or .scss)
 			if not using_own_template
 				template_style = File.open(@config['default_template_style'],"r").read
+				compiled_style = Fiction.render(template_style,'sass')
 			else
-				template_style = File.open( File.join() ,"r").read
+				compiled_style = File.open( File.join( @wd, "template", "style.css") ,"r").read
 			end
-			template_style = Fiction.render(template_style,'sass')
+			
 
 			# create index file
 			print "Creating index file..." unless quiet
@@ -47,7 +48,7 @@ class Fiction
 				'author' => config["story"]["author"],
 				'summary' => summary,
 				'chapters' => config["chapters"],
-				'style' => template_style,
+				'style' => compiled_style, # generated css are injected directly to template, sorry!
 				'version' => Fiction::Version
 			)
 
@@ -80,7 +81,7 @@ class Fiction
 						'title' => config["story"]["title"],
 						'chapter' => chapter["title"],
 						'author' => config["story"]["author"],
-						'style' => template_style,
+						'style' => compiled_style,
 						'content' => compiled_content
 					)
 					File.open(File.join(@wd,"html","#{chapter['file']}.html"),"w"){|f| f.write(compiled_chapter_template)}
