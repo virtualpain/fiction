@@ -2,10 +2,9 @@ require "redcarpet"
 require "sass"
 require "redcloth"
 class Fiction
-	def self.render(content,format)
-		# prepare the markdown parser
-		markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(:no_links => true,:filter_html => true),:autolink => false)
+	def self.render(content,format)		
 		if format.match /^(md|markdown)$/
+			markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(:no_links => true,:filter_html => true),:autolink => false)
 			compiled_content = markdown.render(content)
 
 		elsif format == "textile"
@@ -18,6 +17,5 @@ class Fiction
 		end
 
 		return compiled_content
-			
 	end
 end

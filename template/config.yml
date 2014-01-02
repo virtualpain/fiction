@@ -2,6 +2,7 @@ version: 1
 story:
     title: ""
     author: Your Name Here
+    profile: ""
     finished: false
     adult: false
     language: en_US

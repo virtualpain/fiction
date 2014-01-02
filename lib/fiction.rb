@@ -49,6 +49,7 @@ class Fiction
 				Dir.mkdir(target_dir)
 				# copy config file
 				FileUtils.cp(File.join(@tp,"config.yml"),target_dir)
+				# copy license file
 				FileUtils.cp(@config['default_template_license'],File.join(target_dir,"license"))
 				# change config file
 				config = YAML.load_file(File.join(target_dir,"config.yml"))
@@ -57,7 +58,7 @@ class Fiction
 				# create html dir
 				FileUtils.mkdir(File.join(target_dir,"html"))
 				File.open(File.join(target_dir,"summary"),"w"){|f| f.write("#{title} summary, edit me in `summary` file")} 
-				# create draft dir
+				# TODO create draft dir
 				# FileUtils.mkdir(File.join(target_dir,"drafts"))
 				puts "New story \"#{title}\" created in #{dir_name}"
 			else
