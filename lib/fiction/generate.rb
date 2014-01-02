@@ -21,25 +21,15 @@ class Fiction
 			# create index file
 			print "Creating index file..." unless quiet
 
-			template_index = File.open(@config['default_template_index'],"r").read
-
+			
 			# put summary to empty if there is no 'summary' file
 			summary = ""
 			if File.exists? (File.join(@wd,"summary"))
 				summary = File.open("summary","r").read
 			end
 
-			# assign variables
-			# template_index = template_index % {
-			# 	story_title: config["story"]["title"],
-			# 	author_name: config["story"]["author"],
-			# 	story_summary: summary,
-			# 	chapters: chapter_list,
-			# 	style: template_style,
-			# 	version: Fiction::Version
-			# }
-
 			# render liquid template
+			template_index = File.open(@config['default_template_index'],"r").read
 			template = Liquid::Template.parse(template_index)
 			compiled_template = template.render(
 				'title' => config["story"]["title"],
