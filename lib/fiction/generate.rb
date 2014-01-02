@@ -11,12 +11,19 @@ class Fiction
 			# no longer used since CSS now injected in every page
 			# FileUtils.cp(@config['default_template_style'],File.join(@wd,"html"))
 
-			# render stylesheet (.css or .scss)
-			template_style = File.open(@config['default_template_style'],"r").read
-			template_style = Fiction.render(template_style,'sass')
-
 			# load config file
 			config = YAML.load_file(File.join(@wd,"config.yml"))
+
+			# check if using own template
+			using_own_template = config["settings"]["template"]
+
+			# render stylesheet (.css or .scss)
+			if not using_own_template
+				template_style = File.open(@config['default_template_style'],"r").read
+			else
+				template_style = File.open( File.join() ,"r").read
+			end
+			template_style = Fiction.render(template_style,'sass')
 
 			# create index file
 			print "Creating index file..." unless quiet
@@ -29,7 +36,11 @@ class Fiction
 			end
 
 			# render liquid template
-			template_index = File.open(@config['default_template_index'],"r").read
+			if not using_own_template
+				template_index = File.open(@config['default_template_index'],"r").read
+			else
+				template_index = File.open( File.join(@wd,"template","index.html") )
+			end
 			template = Liquid::Template.parse(template_index)
 			compiled_template = template.render(
 				'title' => config["story"]["title"],
@@ -59,7 +70,11 @@ class Fiction
 					compiled_content = Fiction.render(raw_content,config["settings"]["format"])
 
 					# rendering liquid template
-					template_html = File.open(@config['default_template_chapter'],"r").read
+					if not using_own_template
+						template_html = File.open(@config['default_template_chapter'],"r").read
+					else
+						template_html = File.open( File.join(@wd,"template","chapter.html") ,"r").read
+					end
 					template_html_content = Liquid::Template.parse(template_html)
 					compiled_chapter_template = template_html_content.render(
 						'title' => config["story"]["title"],

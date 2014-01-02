@@ -8,5 +8,5 @@ story:
     language: en_US
 settings:
 	format: md
-    using_template: false
+    template: false
 chapters: []
